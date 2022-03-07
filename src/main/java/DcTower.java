@@ -1,30 +1,80 @@
+import java.util.LinkedList;
+
+/**
+ * DcTower class functions as the "Controller" in the MVC context (Design Pattern)
+ * Elevator and Person class act as the Models
+ *
+ * @author Ajdin Memić
+ */
+
 public class DcTower {
 
-   private int numbOfElevators;
-   private int numbOfFloors;
+    private static int numbOfElevators = 7;
+    private int numbOfFloors = 55;
+    private static LinkedList<Person> persons = new LinkedList<>();
+    private static LinkedList<Elevator> elevators = new LinkedList<Elevator>();
+    // private static LinkedList<Person>
 
-    public DcTower(int numbOfElevators, int numbOfFloors){
+    public DcTower() {
 
         setNumbOfElevators(numbOfElevators);
         setNumbOfFloors(numbOfFloors);
 
-        setUp();
     }
 
+    public static void main(String[] args) {
 
-    private void setUp(){
-       printInfo();
+        DcTower dcTower = new DcTower();
+
+        setUpElevators();
+
+        addRequest(new Person(true, 2, Person.Direction.UP));
+        addRequest(new Person(true, 5, Person.Direction.UP));
+        addRequest(new Person(true, 14, Person.Direction.UP));
+        addRequest(new Person(true, 10, Person.Direction.UP));
+        addRequest(new Person(true, 11, Person.Direction.UP));
+        addRequest(new Person(true, 18, Person.Direction.UP));
+        addRequest(new Person(true, 3, Person.Direction.UP));
+        addRequest(new Person(true, 20, Person.Direction.UP));
     }
 
-
-    public void printInfo(){
-        System.out.println("-----------------------");
-        System.out.println("Number of Elevators: "+ getNumbOfElevators());
-        System.out.println("Number of Floors:    "+ getNumbOfFloors());
-        System.out.println("-----------------------");
+    private static void setUpElevators() {
+        for (int i = 0; i < getNumbOfElevators(); i++) {
+            Elevator e = new Elevator();
+            elevators.add(e);
+        }
     }
 
-    public int getNumbOfElevators() {
+    private static void addRequest(Person p) {
+
+        boolean foundFreeElevator = false;
+
+        if (p.getHasCard()) {
+            persons.add(p);
+            System.out.println("Person" + p.getPersonId() + " entered the DC Tower.");
+
+            //if there is a free elevator the while loop goes only once
+            while (!foundFreeElevator) {
+                //see if there is a free elevator to take the person
+                for (Elevator e : elevators) {
+                    if (!foundFreeElevator) {
+                        if (e.getPersonsInElevator().size() == 0) {
+                            e.getPersonsInElevator().add(p);
+                            foundFreeElevator = true;
+                            if (!e.isAlive()) {
+                                e.start();
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            System.out.println("Person" + p.getPersonId() + " not authorize access to the DC Tower.");
+        }
+
+    }
+
+    public static int getNumbOfElevators() {
         return numbOfElevators;
     }
 
