@@ -24,28 +24,33 @@ public class Elevator extends Thread {
         while (true) {
 
             try {
-                sleep(2000);
+                sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            System.out.println("Elevator #" + getElevatorId() + " on floor " + getCurrentFloor());
 
             for (Person p : getPersonsInElevator()) {
 
                 if (!p.isInElevator()) {
                     if (p.getCurrentFloor() == this.currentFloor) {
                         p.setInElevator(true);
+                        System.out.println("Person "+p.getPersonId()+" enters Elevator #"+getElevatorId()+" on floor "+getCurrentFloor());
                     }
                     if (p.getDirection() == Person.Direction.UP) {
                         if (p.getCurrentFloor() < this.currentFloor) {
                             setCurrentFloor(getCurrentFloor() - 1);
+                            System.out.println("Elevator #" + getElevatorId() + " going DOWN, floor " + getCurrentFloor());
+                        }else if(p.getCurrentFloor() == this.currentFloor){
+                            System.out.println("Elevator #" + getElevatorId() + " going UP, floor " + getCurrentFloor());
+                            setCurrentFloor(getCurrentFloor() + 1);
                         }
                     } else if (p.getDirection() == Person.Direction.DOWN) {
                         if (p.getCurrentFloor() < this.currentFloor) {
                             setCurrentFloor(getCurrentFloor() - 1);
+                            System.out.println("Elevator #" + getElevatorId() + " going DOWN, floor " + getCurrentFloor());
                         } else if (p.getCurrentFloor() > this.currentFloor) {
                             setCurrentFloor(getCurrentFloor() + 1);
+                            System.out.println("Elevator #" + getElevatorId() + " going UP, floor " + getCurrentFloor());
                         }
                     }
                 }
@@ -53,26 +58,21 @@ public class Elevator extends Thread {
                 if (p.isInElevator()) {
                     if (p.getDirection() == Person.Direction.UP) {
                         setCurrentFloor(getCurrentFloor() + 1);
+                        System.out.println("Elevator #" + getElevatorId() + " going UP, floor " + getCurrentFloor());
                     } else {
                         setCurrentFloor(getCurrentFloor() - 1);
+                        System.out.println("Elevator #" + getElevatorId() + " going DOWN, floor " + getCurrentFloor());
                     }
                     if (p.GoingToFloor(p) == getCurrentFloor()) {
                         System.out.println("Person " + p.getPersonId() + " leaves Elevator #" + getElevatorId() + " on floor " + getCurrentFloor());
                         getPersonsInElevator().remove(p);
-                        System.out.println("Persons left:" + getPersonsInElevator().size());
+                        System.out.println("Elevator #" + getElevatorId() + " is empty, stops right now of floor " + getCurrentFloor());
                     }
                 }
             }
 
             if (personsInElevator.size() == 0) {
-                System.out.println("Elevator #" + getElevatorId() + " is empty, stops right now of floor " + getCurrentFloor());
-                synchronized (this) {
-                    try {
-                        this.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+
             }
         }
     }
