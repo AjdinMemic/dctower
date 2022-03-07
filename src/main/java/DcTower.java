@@ -23,19 +23,23 @@ public class DcTower {
     }
 
     public static void main(String[] args) {
-
-        DcTower dcTower = new DcTower();
-
         setUpElevators();
 
-        addRequest(new Person(true, 2, Person.Direction.UP));
-        addRequest(new Person(true, 5, Person.Direction.UP));
-        addRequest(new Person(true, 14, Person.Direction.UP));
-        addRequest(new Person(true, 10, Person.Direction.UP));
-        addRequest(new Person(true, 11, Person.Direction.UP));
-        addRequest(new Person(true, 18, Person.Direction.UP));
-        addRequest(new Person(true, 3, Person.Direction.UP));
-        addRequest(new Person(true, 20, Person.Direction.UP));
+        addRequest(new Person(true, 2, Person.Direction.UP, 0));
+        addRequest(new Person(true, 5, Person.Direction.DOWN, 5));
+        addRequest(new Person(true, 14, Person.Direction.UP, 0));
+        addRequest(new Person(true, 10, Person.Direction.UP, 0));
+        addRequest(new Person(true, 11, Person.Direction.UP, 0));
+        addRequest(new Person(true, 18, Person.Direction.UP, 0));
+        addRequest(new Person(true, 11, Person.Direction.DOWN, 11));
+        addRequest(new Person(true, 3, Person.Direction.UP, 0));
+        addRequest(new Person(true, 20, Person.Direction.UP, 0));
+        addRequest(new Person(true, 4, Person.Direction.UP, 0));
+        addRequest(new Person(true, 4, Person.Direction.UP, 0));
+        addRequest(new Person(true, 20, Person.Direction.DOWN, 20));
+        addRequest(new Person(true, 5, Person.Direction.DOWN, 5));
+        addRequest(new Person(true, 12, Person.Direction.DOWN, 12));
+        addRequest(new Person(true, 6, Person.Direction.UP, 0));
     }
 
     private static void setUpElevators() {
@@ -59,6 +63,7 @@ public class DcTower {
                 for (Elevator e : elevators) {
                     if (!foundFreeElevator) {
                         if (e.getPersonsInElevator().size() == 0) {
+                            //p.setInElevator(true);
                             e.getPersonsInElevator().add(p);
                             foundFreeElevator = true;
                             if (!e.isAlive()) {
@@ -71,7 +76,6 @@ public class DcTower {
         } else {
             System.out.println("Person" + p.getPersonId() + " not authorize access to the DC Tower.");
         }
-
     }
 
     public static int getNumbOfElevators() {

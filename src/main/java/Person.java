@@ -1,9 +1,8 @@
 public class Person {
     /**
-    * Every Person has a card that authorize access to the DC Tower
-    * after successful entering the person gets an elevator number
-    * if there is not a free elevator the person is added to a queue
-    *
+     * Every Person has a card that authorize access to the DC Tower
+     * after successful entering the person gets an elevator number
+     * if there is not a free elevator the person is added to a queue
      */
     private boolean hasCard;
     private Direction direction;
@@ -11,18 +10,19 @@ public class Person {
     private int currentFloor;
     private int personId;
     private static int personsInTower = 0;
+    private boolean isInElevator;
 
-    public enum Direction
-    {
+    public enum Direction {
         DOWN,
         UP
     }
 
-    public Person(boolean hasCard, int cardToFloorNr,Direction direction) {
-        currentFloor=0;
+    public Person(boolean hasCard, int cardToFloorNr, Direction direction, int currentFloor) {
+        isInElevator = false;
+        setCurrentFloor(currentFloor);
         setHasCard(hasCard);
         setCardToFloorNr(cardToFloorNr);
-        this.direction=direction;
+        this.direction = direction;
         personsInTower++;
         setPersonId(personsInTower);
     }
@@ -73,5 +73,19 @@ public class Person {
 
     public void setCurrentFloor(int currentFloor) {
         this.currentFloor = currentFloor;
+    }
+
+    public boolean isInElevator() {
+        return isInElevator;
+    }
+
+    public void setInElevator(boolean inElevator) {
+        isInElevator = inElevator;
+    }
+
+    public int GoingToFloor(Person p) {
+        if (p.getDirection() == Direction.UP) {
+            return getCardToFloorNr();
+        } else return 0;
     }
 }

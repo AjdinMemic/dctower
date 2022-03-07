@@ -3,7 +3,6 @@ import java.util.LinkedList;
 /**
  * There are up to n (let say 7) elevators that bring people to their offices
  * At the beginning all elevators are on the first floor
- *
  */
 
 public class Elevator extends Thread {
@@ -33,11 +32,35 @@ public class Elevator extends Thread {
             System.out.println("Elevator #" + getElevatorId() + " on floor " + getCurrentFloor());
 
             for (Person p : getPersonsInElevator()) {
-                //System.out.println("p.getCardToFloorNr()=" + p.getCardToFloorNr() + " getCurrentFloor()=" + getCurrentFloor());
-                if (p.getCardToFloorNr() == getCurrentFloor()) {
-                    System.out.println("Person " + p.getPersonId() + " leaves Elevator #" + getElevatorId() + " on floor " + getCurrentFloor());
-                    getPersonsInElevator().remove(p);
-                    System.out.println("Persons left:" + getPersonsInElevator().size());
+
+                if (!p.isInElevator()) {
+                    if (p.getCurrentFloor() == this.currentFloor) {
+                        p.setInElevator(true);
+                    }
+                    if (p.getDirection() == Person.Direction.UP) {
+                        if (p.getCurrentFloor() < this.currentFloor) {
+                            setCurrentFloor(getCurrentFloor() - 1);
+                        }
+                    } else if (p.getDirection() == Person.Direction.DOWN) {
+                        if (p.getCurrentFloor() < this.currentFloor) {
+                            setCurrentFloor(getCurrentFloor() - 1);
+                        } else if (p.getCurrentFloor() > this.currentFloor) {
+                            setCurrentFloor(getCurrentFloor() + 1);
+                        }
+                    }
+                }
+
+                if (p.isInElevator()) {
+                    if (p.getDirection() == Person.Direction.UP) {
+                        setCurrentFloor(getCurrentFloor() + 1);
+                    } else {
+                        setCurrentFloor(getCurrentFloor() - 1);
+                    }
+                    if (p.GoingToFloor(p) == getCurrentFloor()) {
+                        System.out.println("Person " + p.getPersonId() + " leaves Elevator #" + getElevatorId() + " on floor " + getCurrentFloor());
+                        getPersonsInElevator().remove(p);
+                        System.out.println("Persons left:" + getPersonsInElevator().size());
+                    }
                 }
             }
 
@@ -50,44 +73,7 @@ public class Elevator extends Thread {
                         e.printStackTrace();
                     }
                 }
-            } else {
-                setCurrentFloor(getCurrentFloor() + 1);
             }
-
-            /*while (person.getCurrentFloor() == this.getCurrentFloor()){
-
-            }
-
-
-
-            if (person.getCardToFloorNr() == getCurrentFloor()) {
-                System.out.println("Person " + person.getPersonId() + " leaves for the " + getCurrentFloor() + " floor");
-            } else {
-                if (person.getDirection() == Person.Direction.UP) {
-
-                    if (this.getCurrentFloor() < person.getCardToFloorNr()) {
-                        setCurrentFloor(getCurrentFloor() + 1);
-                    } else {
-                        setCurrentFloor(getCurrentFloor() - 1);
-                    }
-
-                    if (person.getCardToFloorNr() == getCurrentFloor()) {
-                        System.out.println("Person " + person.getPersonId() + " leaves for the " + getCurrentFloor() + " floor");
-                    }
-                } else if (person.getDirection() == Person.Direction.DOWN) {
-
-                    if (this.getCurrentFloor() < person.getCardToFloorNr()) {
-                        setCurrentFloor(getCurrentFloor() + 1);
-                    } else {
-                        setCurrentFloor(getCurrentFloor() - 1);
-                    }
-
-                    if (person.getCardToFloorNr() == getCurrentFloor()) {
-                        System.out.println("Person " + person.getPersonId() + " leaves for the " + getCurrentFloor() + " floor");
-                    }
-                }
-            }*/
-
         }
     }
 
