@@ -5,7 +5,7 @@ public class Person {
      * if there is not a free elevator the person is added to a queue
      */
     private boolean hasCard;
-    private Direction direction;
+    private final Direction direction;
     private int cardToFloorNr;
     private int currentFloor;
     private int personId;
@@ -51,20 +51,8 @@ public class Person {
         this.personId = personId;
     }
 
-    public static int getPersonsInTower() {
-        return personsInTower;
-    }
-
-    public static void setPersonsInTower(int personsInTower) {
-        Person.personsInTower = personsInTower;
-    }
-
     public Direction getDirection() {
         return direction;
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
     }
 
     public int getCurrentFloor() {

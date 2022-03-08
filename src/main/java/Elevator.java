@@ -70,10 +70,6 @@ public class Elevator extends Thread {
                     }
                 }
             }
-
-            if (personsInElevator.size() == 0) {
-
-            }
         }
     }
 

@@ -1,8 +1,6 @@
 import java.util.LinkedList;
 
 /**
- * DcTower class functions as the "Controller" in the MVC context (Design Pattern)
- * Elevator and Person class act as the Models
  *
  * @author Ajdin Memić
  */
@@ -13,7 +11,6 @@ public class DcTower {
     private static int numbOfFloors = 55;
     private static LinkedList<Person> persons = new LinkedList<>();
     private static LinkedList<Elevator> elevators = new LinkedList<Elevator>();
-    // private static LinkedList<Person>
 
     public DcTower() {
 
@@ -41,7 +38,7 @@ public class DcTower {
         addRequest(new Person(true, 4, Person.Direction.UP, 0));
         addRequest(new Person(true, 20, Person.Direction.DOWN, 20));
 
-        addRequest(new Person(true, 5, Person.Direction.DOWN, 5));
+        addRequest(new Person(true, 8, Person.Direction.DOWN, 8));
         addRequest(new Person(true, 12, Person.Direction.DOWN, 12));
         addRequest(new Person(true, 6, Person.Direction.UP, 0));
 
