@@ -6,6 +6,7 @@ import java.util.LinkedList;
  */
 
 public class DcTower {
+    //new comment
 
     private static int numbOfElevators = 7;
     private static int numbOfFloors = 55;
